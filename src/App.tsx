@@ -1,10 +1,13 @@
-
+import { BrowserRouter } from "react-router-dom";
+import Layout from "./components/Layout";
+import { ThemeProvider } from "./context/ThemeProvider";
 function App() {
-
   return (
-    <>
-    <h1 className="text-black font-bold">Vansh Kansal</h1>
-    </>
+    <BrowserRouter>
+    <ThemeProvider defaultTheme="system">
+    <Layout>Hello</Layout>
+    </ThemeProvider>
+    </BrowserRouter>
   )
 }
 
