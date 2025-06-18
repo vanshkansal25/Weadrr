@@ -88,6 +88,17 @@ const WeatherDashboard = () => {
             }`} />
         </Button>
       </div>
+      <div className="grid gap-6">
+        <div className="flex flex-col lg:flex-row gap-4">
+          <CurrentWeather
+            data={weatherQuery.data}
+            locationName={locationName}
+          />
+        </div>
+        <div className="grid gap-6 md:grid-cols-2 items-start">
+
+        </div>
+      </div>
     </div>
   )
 }
