@@ -15,8 +15,10 @@ import { format } from "date-fns";
 import { Button } from './ui/button';
 import { useLocationSearch } from '../hooks/useWeather';
 import { useSearchHistory } from '../hooks/useSearchHistory';
+import { useFavorites } from '../hooks/useFavorites';
 const CitySearch = () => {
     const navigate = useNavigate();
+    const {favorites} = useFavorites();
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
     const { data: locations, isLoading } = useLocationSearch(query);
@@ -48,9 +50,28 @@ const CitySearch = () => {
                     onValueChange={setQuery} />
                 <CommandList>
                     {query.length > 2 && !isLoading && <CommandEmpty>No results found.</CommandEmpty>}
-                    <CommandGroup heading="Favourites">
-                        <CommandItem>Calendar</CommandItem>
-                    </CommandGroup>
+                    {favorites.length > 0 && (
+                        <CommandGroup heading="Favorites">
+                            {favorites.map((city) => (
+                                <CommandItem
+                                    key={city.id}
+                                    value={`${city.lat}|${city.lon}|${city.name}|${city.country}`}
+                                    onSelect={handleSelect}
+                                >
+                                    <Star className="mr-2 h-4 w-4 text-yellow-500" />
+                                    <span>{city.name}</span>
+                                    {city.state && (
+                                        <span className="text-sm text-muted-foreground">
+                                            , {city.state}
+                                        </span>
+                                    )}
+                                    <span className="text-sm text-muted-foreground">
+                                        , {city.country}
+                                    </span>
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    )}
                     {history.length > 0 && (
                         <>
                             <CommandSeparator />
