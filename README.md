@@ -1,54 +1,157 @@
-# React + TypeScript + Vite
+# 🌦️ Weadrr - Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Screenshot](./public/Screenshot%20(102).png)  
+*Modern weather app with real-time updates, charts, and a polished UI*
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 Overview
 
-## Expanding the ESLint configuration
+**Weadrr** is a modern, responsive weather dashboard built using **React**, **TypeScript**,**TanStack Query** and a suite of powerful libraries to provide a seamless and insightful weather tracking experience. From real-time data fetching to beautifully animated UI components, Weadrr brings a refined weather website to your fingertips.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🚀 Features
+
+- 🌍 **Real-time weather** data for any location worldwide  
+- ⭐ Manage your **favorite cities** with ease  
+- 🕓 Track **search history** to revisit past lookups  
+- 📊 **Interactive charts** for hourly and weekly forecasts  
+- 📱 **Fully responsive** design for all devices  
+
+---
+
+## 🛠 Tech Stack
+
+### 🧩 Core Technologies
+- **React** (Vite) – Fast, modular frontend framework  
+- **TypeScript** – Strict typing and developer confidence  
+- **TanStack Query v5** – Declarative data fetching and state management  
+- **shadcn/ui** – Accessible, beautiful UI components  
+- **Recharts** – Clean and interactive data visualizations  
+
+### 🔗 APIs Used
+- [OpenWeatherMap API](https://openweathermap.org/api) – Real-time weather and forecasts  
+
+
+---
+
+## 🔑 Key Features
+
+### 1. 📡 Intelligent Data Fetching (TanStack Query)
+
+- Caching for weather data freshness  
+- Optimistic updates when favoriting cities  
+- Automatic deduplication of API calls  
+- Retry logic for failed fetches  
+
+```ts
+export function useWeatherQuery(coordinates: Coordinates | null) {
+  return useQuery({
+    queryKey: WEATHER_KEYS.weather(coordinates ?? { lat: 0, lon: 0 }),
+    queryFn: () =>
+      coordinates ? weatherAPI.getCurrentWeather(coordinates) : null,
+    enabled: !!coordinates,
+  });
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 2. 🧠 Fully Typed with TypeScript
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Strict typing for API responses  
+- Type-safe event handlers and utilities  
+- Reusable generic components  
+
+```ts
+export interface WeatherData {
+  coord: Coordinates;
+  weather: WeatherCondition[];
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
+  };
+  sys: {
+    sunrise: number;
+    sunset: number;
+    country: string;
+  };
+  name: string;
+  dt: number;
+}
 ```
+
+---
+
+### 3. 📈 Forecast Charts with Recharts
+
+- Hourly temperature fluctuations  
+- 5-day forecast trends  
+- Interactive tooltips & responsive design  
+
+---
+
+### 4. 🎨 UI/UX with shadcn/ui
+
+- Accessible, themed components  
+- Dark/light mode toggle  
+- Form optimizations and animated transitions  
+
+---
+
+
+## 🧪 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/vanshkansal25/Weadrr.git
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file with your API keys:
+
+```env
+VITE_OPENWEATHER_API_KEY=your_api_key
+VITE_GEODB_API_KEY=your_api_key
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+---
+
+## 📁 Project Structure
+
+```
+├── api          # API service definitions
+/src
+├── components   # Reusable UI components
+├── context      # Theme Provider
+├── hooks        # Custom React hooks
+└── lib          # For utils
+├── pages        # Main route views
+├── types        # Global TypeScript types
+```
+
+---
+
+
+> **Note:** This project was bootstrapped with **Vite**. Huge thanks to [OpenWeatherMap](https://openweathermap.org/) for providing robust free APIs.
