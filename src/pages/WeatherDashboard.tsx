@@ -5,12 +5,14 @@ import WeatherSkeleton from "../components/WeatherSkeleton";
 import { Alert, AlertDescription, AlertTitle } from "../components/ui/alert"
 import { Terminal,MapPin } from "lucide-react";
 import { useForecastQuery, useReverseGeocodeQuery, useWeatherQuery } from "../hooks/useWeather";
+import CurrentWeather from "../components/CurrentWeather";
+import HourlyTemperature from "../components/HourlyTemperature";
 const WeatherDashboard = () => {
   const { coordinates, error, getLocation, isLoading } = useGeoLocation();
-
   const locationQuery = useReverseGeocodeQuery(coordinates);
   const weatherQuery = useWeatherQuery(coordinates);
   const forecastQuery = useForecastQuery(coordinates);
+
 
   const handleRefresh = () => {
     getLocation()
@@ -74,7 +76,7 @@ const WeatherDashboard = () => {
 
 
   return (
-    <div>
+    <div className="space-y-4">
       {/* Favourite Cities */}
       <div className="flex items-center justify-between">
         <h1 className="text-xl inter-bold tracking-tight">My Location</h1>
@@ -94,9 +96,9 @@ const WeatherDashboard = () => {
             data={weatherQuery.data}
             locationName={locationName}
           />
+          <HourlyTemperature data={forecastQuery.data} />
         </div>
         <div className="grid gap-6 md:grid-cols-2 items-start">
-
         </div>
       </div>
     </div>
