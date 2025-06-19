@@ -10,7 +10,7 @@ const Layout = ({children}:PropsWithChildren) => {
         </main>
         <footer className='border-t py-12 '>
             <div className='container mx-auto px-4 text-center text-gray-400'>
-                <p className='inter-bold'>Made By Vansh Kansal</p>
+                <p className='inter-bold'>Made with ❤ By Vansh Kansal</p>
             </div>
         </footer>
     </div>

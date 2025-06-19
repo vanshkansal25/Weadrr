@@ -7,6 +7,11 @@ import { Terminal,MapPin } from "lucide-react";
 import { useForecastQuery, useReverseGeocodeQuery, useWeatherQuery } from "../hooks/useWeather";
 import CurrentWeather from "../components/CurrentWeather";
 import HourlyTemperature from "../components/HourlyTemperature";
+import WeatherDetail from "../components/WeatherDetail";
+import WeatherForecast from "../components/WeatherForecast";
+
+
+
 const WeatherDashboard = () => {
   const { coordinates, error, getLocation, isLoading } = useGeoLocation();
   const locationQuery = useReverseGeocodeQuery(coordinates);
@@ -99,6 +104,8 @@ const WeatherDashboard = () => {
           <HourlyTemperature data={forecastQuery.data} />
         </div>
         <div className="grid gap-6 md:grid-cols-2 items-start">
+          <WeatherDetail data={weatherQuery.data} />
+          <WeatherForecast data={forecastQuery.data} />
         </div>
       </div>
     </div>
